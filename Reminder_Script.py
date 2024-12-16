@@ -85,9 +85,15 @@ def get_upcoming_snowboarding_weekends():
             for event in events:
                 summary = event.get('summary', '').lower()
                 if any(keyword in summary for keyword in KEYWORDS):
-                    start = event['start'].get('date')
-                    if start:  # Only process all-day events
-                        start_date = datetime.datetime.strptime(start, '%Y-%m-%d')
+                    # Handle both all-day and timed events
+                    start = event['start'].get('date') or event['start'].get('dateTime')
+                    if start:
+                        # Parse different date formats
+                        if 'T' in start:  # Timed event
+                            start_date = datetime.datetime.fromisoformat(start.replace('Z', '+00:00'))
+                        else:  # All-day event
+                            start_date = datetime.datetime.strptime(start, '%Y-%m-%d')
+                        
                         if start_date.weekday() in [5, 6]:  # Saturday or Sunday
                             weekends.append(start_date)
                             logging.info(f"Found snowboarding event: {summary} on {start}")

@@ -10,13 +10,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      
+      - name: Set up Python
+        uses: actions/setup-python@v2
         with:
-          python-version: '3.x'
+          python-version: '3.11'  # Specify exact version
+          
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install google-api-python-client google-auth python-dotenv
+          pip install -r requirements.txt
+          
       - name: Run Reminder Script
         env:
           GOOGLE_SERVICE_ACCOUNT: ${{ secrets.GOOGLE_SERVICE_ACCOUNT }}
@@ -25,4 +29,8 @@ jobs:
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
           EMAIL_RECIPIENT: ${{ secrets.EMAIL_RECIPIENT }}
-        run: python Reminder_Script.py
+          PRIMARY_CALENDAR_ID: ${{ secrets.PRIMARY_CALENDAR_ID }}
+          SECONDARY_CALENDAR_ID: ${{ secrets.SECONDARY_CALENDAR_ID }}
+        run: |
+          python Reminder_Script.py
+        continue-on-error: false
