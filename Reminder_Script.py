@@ -115,7 +115,7 @@ def send_email_reminder():
         email_password = os.environ['EMAIL_PASSWORD']
         recipient = os.environ['EMAIL_RECIPIENT']
 
-        msg = MIMEText('Reminder to get parking for the upcoming snowboarding weekend.')
+        msg = MIMEText('Reminder to get parking for the upcoming snowboarding weekend. Free reservations will open every Tuesday at 12pm and 7pm for the following. weekend/holiday. https://reservenski.parkpalisadestahoe.com/')
         msg['Subject'] = 'Snowboarding Parking Reminder'
         msg['From'] = email_user
         msg['To'] = recipient
