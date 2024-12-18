@@ -2,7 +2,7 @@ name: Snowboarding Reminder
 
 on:
   schedule:
-    - cron: '0 9 * * 2'  # Runs every Tuesday at 09:00 UTC
+    - cron: '0 17 * * 2'  # Runs every Tuesday at 10:00 Pacific
   workflow_dispatch:  # Allows manual triggering
 
 jobs:
